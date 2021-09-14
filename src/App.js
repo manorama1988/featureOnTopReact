@@ -1,17 +1,22 @@
-import { Fragment } from 'react';
-import './App.css';
-import Header from './component/layout/Header';
+import { Fragment , useState} from 'react';
 
-import MainForm from './component/layout/MainForm';
-import ShowForm from './component/main/ShowForm';
+import AddUser from './component/Users/AddUser';
+import UsersList from './component/Users/UsersList';
 
 function App() {
+  const [usersList, setUsersList] = useState([ ]);
+  
+  const addUserHandler = (uName, uAge, uContent) => { 
+      setUsersList((prevUsersList) => {
+        return [...prevUsersList, {name: uName, age: uAge, content: uContent, id: Math.random().toString()}];
+      });
+  };
   return (
     <Fragment>
        
-        <Header />
+        <AddUser onAddUser={addUserHandler}/>
      
-        
+        <UsersList users={usersList}/>
     </Fragment>
   );
 }
