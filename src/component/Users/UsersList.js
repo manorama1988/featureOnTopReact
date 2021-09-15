@@ -3,13 +3,15 @@ import React ,{ useState } from 'react';
 import Card from '../UI/Card';
 import classes from './UsersList.module.css';
 const UsersList = (props) => {
-    const [like, setLike] = useState( [ ]);
+    const [count, setCount] = useState( 0 );
 
     const likeButton =(event) => {
-        // console.log(event.target.value,"like");
-        // setLike(event.target.value);
-       const likebutton = event.target.value;
-        console.log(likebutton,"like ");
+        setCount(count + 1);
+       console.log("click me" + count);
+    }
+    const unLikeButton = () => {
+        setCount(count - 1);
+        console.log("un click me" + count);
     }
 
     return (
@@ -21,9 +23,10 @@ const UsersList = (props) => {
             <li key={user.id}>
                 {user.name} ({user.age} years old) {user.content}
                 <div className={classes.choice}>
-                <button className={classes.like} onClick={likeButton}> {props.likebutton}</button>
-                <button className={classes.unlike}>Unlike</button>
-        </div> 
+                    <h1>{count}</h1>
+                        <button className={classes.like} onClick={likeButton}> Like</button>
+                        <button className={classes.unlike} onClick={unLikeButton}>Unlike</button>
+                 </div> 
             </li>
             
         ))}
