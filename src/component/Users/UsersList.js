@@ -16,12 +16,12 @@ const UsersList = (props) => {
 
     return (
         
-        <div className={classes.users}>
+        <Card className={classes.users}>
     <ul>        
         
         {props.users.map((user)=> (
             <li key={user.id}>
-                {user.name} ({user.age} years old) {user.content}
+           
                 <div className={classes.choice}>
                     <h1>{count}</h1>
                         <button className={classes.like} onClick={likeButton}> Like</button>
@@ -34,7 +34,7 @@ const UsersList = (props) => {
     
 </ul>
     
-    <br /></div>
+    </Card>
     );
 };
 export default UsersList;
