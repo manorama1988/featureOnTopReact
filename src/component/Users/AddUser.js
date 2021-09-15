@@ -27,9 +27,13 @@ const AddUser = (props) => {
             <Card className={classes.a}>
                 <form onSubmit={addUserHandler}>
                    
-                    <label htmlFor="usertext"> Title</label>
-                    <input id="usertext" type="text" value={enteredContent} onChange={contentChangeHandler}/>  
-                    <Button type="submit" className={classes.submitButton}>Add User</Button>                 
+                    <label htmlFor="usertext"> My Post</label>
+                    <textarea id="usertext" type="text" cols="20"
+          rows="3"
+          maxLength="180"
+          required value={enteredContent} onChange={contentChangeHandler}/>  
+          
+                    <Button type="submit" className={classes.submitButton}>Add Post</Button>                 
                 </form>
              </Card>
     );

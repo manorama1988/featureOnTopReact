@@ -1,6 +1,11 @@
 a{
     font-size:16px;
 }
+label{
+    color:White;
+    margin:5px 0;
+    font-weight:bold;
+}
 form{
     /* margin: 0 auto ;
     width:400px; */
@@ -10,6 +15,7 @@ form{
     margin-top:2rem;
     /* background-image: linear-gradient(to left , rgb(252, 157, 173), #800080); */
     padding:15px;
+    border-radius:10px;
     box-shadow: 0px 20px 10px 0px purple;
 }
 input{

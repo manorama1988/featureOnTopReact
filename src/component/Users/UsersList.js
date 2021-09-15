@@ -1,40 +1,35 @@
-import React ,{ useState } from 'react';
+import React  from 'react';
 
-import Card from '../UI/Card';
 import classes from './UsersList.module.css';
-const UsersList = (props) => {
-    const [count, setCount] = useState( 0 );
 
-    const likeButton =(event) => {
-        setCount(count + 1);
-       console.log("click me" + count);
-    }
-    const unLikeButton = () => {
-        setCount(count - 1);
-        console.log("un click me" + count);
-    }
+
+const UsersList = (props) => {
+   
+    let newDate = new Date();
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
 
     return (
         
-        <Card className={classes.users}>
-    <ul>        
-        
-        {props.users.map((user)=> (
-            <li key={user.id}>
-           
-                <div className={classes.choice}>
-                    <h1>{count}</h1>
-                        <button className={classes.like} onClick={likeButton}> Like</button>
-                        <button className={classes.unlike} onClick={unLikeButton}>Unlike</button>
-                 </div> 
-            </li>
-            
-        ))}
-    
-    
-</ul>
-    
-    </Card>
+        <div className={classes.users} >
+            {props.users.sort((a,b)=>(a.count > b.count ? -1 : 1)).map((user) => (
+            <ul>        
+                <li key={user.id}>
+                    <p className={classes.postText}>{user.content} </p>
+                    <div className={classes.choice}>
+                            <button className={classes.like} onClick={()=>props.userLike(user.id)}> 👍</button>
+                            <h1 className={classes.userchoice}>{user.count}</h1>
+                            <button className={classes.unlike}  onClick={()=>props.userUnLike(user.id)}> 👎</button>
+                    </div> 
+                    <div className={classes.postDate}>
+                        {year}-{month < 10 ? `0${month}` : `${month}`}-{date}
+                    </div>
+
+                </li>
+            </ul>
+            ))}
+        </div>
     );
 };
 export default UsersList;
