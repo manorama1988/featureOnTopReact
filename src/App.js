@@ -1,47 +1,60 @@
+import { getByDisplayValue } from '@testing-library/dom';
 import { Fragment , useState} from 'react';
 
 import AddUser from './component/Users/AddUser';
 import UsersList from './component/Users/UsersList';
 
 const App = () => {
+
+  const [apiData , setApiData ] = useState([ ]);
+  
   const [usersList, setUsersList] = useState([ ]); 
-  let count = 1;
-  const addUserHandler = ( uContent) => { 
+  const addUserHandler = ( enteredContent, enteredTitle, enteredImage, enteredCategory) => { 
+    console.log(enteredImage,"image");
       setUsersList((prevUsersList) => {
-        return [...prevUsersList, {content: uContent, id: Math.random().toString(), count}];
+        return [...prevUsersList, {
+            content: enteredContent,
+            title: enteredTitle,
+            image: enteredImage,
+            category: enteredCategory,
+            id: Math.random().toString()}];
       });
   };
 
- const like = (contentID) => {
-      console.log("like id ", contentID);
-      const updateChoice = usersList.map((post) => {
-        if(post.id === contentID){
-          return {...post, count:post.count+1}
-        };
-        return post;
-      });
-      setUsersList(updateChoice);
- };
-
-  const unLike = (contentID) => {
-    console.log("unLike id ", contentID);
-    const updateChoice = usersList.map((post) => {
-      if(post.id === contentID){
-        return {...post, count:post.count-1}
-      };
-      return post;
+ 
+ async  function fetchApiDataHandler() {
+  const response = await fetch(
+     {
+        method: "get",
+        url: "https://peerup-web-dev-srv.herokuapp.com/parse/classes/PostIt",
+        headers: {
+          "X-Parse-Application-Id": "MVV6avFp",
+          "Content-Type": "application/json"
+        }
+      }
+  )
+  const data = await response.json();
+    const transfromApiData = data.results.map(apiData => {
+      return {
+        id:apiData.objectId,
+          title: apiData.title,
+          description: apiData.description,
+          category: apiData.category,
+          image: apiData.image,
+      }
     });
-    setUsersList(updateChoice);
-  };
+    setApiData(transfromApiData);
+
+ 
 
   return (
     <Fragment>
        
-        <AddUser onAddUser={addUserHandler}/>
+        <AddUser onAddUser={addUserHandler} onClick={fetchApiDataHandler}/>
      
-        <UsersList users={usersList} userLike={like} userUnLike={unLike}/>
+        <UsersList users={usersList} />
     </Fragment>
   );
 }
-
+}
 export default App;
